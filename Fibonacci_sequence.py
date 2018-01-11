@@ -22,7 +22,7 @@ a = [0, 1]
 def f1(n):
     if n > 2:
         x = 0
-        for i in range(n - 2):
+        for i in range(n - 1):
             a.append(a[i] + a[i + 1])
             x += 1
         return a[-1]
@@ -41,7 +41,7 @@ d = 0
 def f2(n):
     global b, c, d
     if n > 2:
-        for i in range(n - 2):
+        for i in range(n - 1):
             d = b + c
             b = c
             c = d
