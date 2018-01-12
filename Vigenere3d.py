@@ -15,7 +15,6 @@ def main(p, k1, k2):
     c = ""
     for a in p:
         c += t[s.find(a)][s.find(k1[i1])][s.find(k2[i2])]
-        d = t[18][27][32]
         i1 = (i1 + 1) % len(k1)
         i2 = (i2 + 1) % len(k2)
     return c
