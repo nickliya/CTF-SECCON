@@ -2,6 +2,8 @@
 import rsa
 from Crypto.PublicKey import RSA
 
+cryptodownload = "http://www.voidspace.org.uk/python/modules.shtml#pycrypto"
+
 
 def get_d(p, q, e):
     """
