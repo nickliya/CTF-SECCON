@@ -3,6 +3,18 @@ import zipfile
 import threading
 import itertools as its
 import string
+import base64
+import hashlib
+import rarfile
+
+
+def base64dec(msg):
+    return base64.b64decode(msg)
+
+
+def base64enc(msg):
+    return base64.b64encode(msg)
+
 
 def createDic(words, repeatcnt):
     """
@@ -27,16 +39,33 @@ def pojie_zip(path, password):
     """
     zip = zipfile.ZipFile(path, 'r')
     print zip.namelist()
-    dicfile = open(u"D:\\软件\\dictionary.txt", "r")
-    info = dicfile.readlines()
-    for i in info:
-        print i
-        try:
-            zip.extractall(path=u'D:\\软件\\pojie', pwd=i)
-        except:
-            pass
+
+    try:
+        zip.extractall(path=u'D:\\软件\\pojie', pwd=password)
+    except:
+        pass
     print ' ----success!,The password is %s' % password
     zip.close()
+
+
+def pojie_rar(path, password):
+    """
+    解压zip文件
+    :param path: 文件地址
+    :param password: 解压密码
+    :return:
+    """
+    rar = rarfile.RarFile(path, 'r')
+    try:
+        rar.extractall(path='D:\\软件\\pojie', pwd=password)
+    except rarfile.RarWrongPassword:
+        print ' ----fail!,The password is not %s' % password
+    else:
+        print ' ----success!,The password is %s' % password
+        rar.close()
+        return True
+    rar.close()
+    return False
 
 
 def strsplit(mystr, number):
@@ -68,10 +97,10 @@ def caesarDecrypt(cipertext, n):
     plaintext = ""
     for x in cipertext:
         if x in string.uppercase:
-            ascindex = 65 + (ord(x)-65+n) % 26
+            ascindex = 65 + (ord(x) - 65 + n) % 26
             plaintext = plaintext + chr(ascindex)
         elif x in string.lowercase:
-            ascindex = 97 + (ord(x)-97+n) % 26
+            ascindex = 97 + (ord(x) - 97 + n) % 26
             plaintext = plaintext + chr(ascindex)
         else:
             plaintext = plaintext + x
@@ -91,7 +120,14 @@ def get_d(p, q, e):
     d = ((p - 1) * (q - 1) + 1) / e
     return d
 
-s = "01110010011101010110111101101011011011110111010101101100011010010110111001100111"
-strlist = strsplit(s, 8)
-for i in strlist:
-    print chr(int(i, 2)),
+
+def creatediymd5():
+    """生成指定的md5"""
+    for i in range(1, 99999999):
+        if hashlib.md5(i).hexdigest().startswith('e4df2f'):
+            print i
+            break
+
+
+s = "TyK_rk_Ft3El{nu@E _s95h_uM}"
+print caesarDecrypt(s, 9)
