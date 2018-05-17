@@ -129,5 +129,15 @@ def creatediymd5():
             break
 
 
-s = "TyK_rk_Ft3El{nu@E _s95h_uM}"
-print caesarDecrypt(s, 9)
+def intToAsicc(msg):
+    cipertext = msg
+    i = 0
+    plaintext = ""
+    while i < len(cipertext)-1:
+        plaintext += chr(int(cipertext[i:i + 2], 16)) + " "
+        i += 2
+    return plaintext
+
+
+s = "69742773206561737921"
+print intToAsicc(s)
